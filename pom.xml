@@ -5,7 +5,7 @@
 
     <groupId>org.vaadin.addons.johannest</groupId>
     <artifactId>border-layout-component</artifactId>
-    <version>1.0.0</version>
+    <version>1.0.1</version>
     <name>BorderLayout component</name>
     <description>Swing like BorderLayout component for Vaadin platform</description>
 
