@@ -4,7 +4,7 @@ Vaadin version of Java BorderLayout component with rather good API compatibility
 
 Uses CSS Grid which can be configured with the following variables. The default value for the default and the HEADER_MAIN_FOOTER theme variant are presented below.
 
-###Default BorderLayout
+### Default BorderLayout
 Grid rows:
 ```
 --header-height: 1fr;
@@ -18,7 +18,7 @@ Grid columns:
 --right-width:  1fr;
 ```
 
-###BorderLayoutVariant.HEADER_MAIN_FOOTER
+### BorderLayoutVariant.HEADER_MAIN_FOOTER
 Grid rows:
 ```
 --header-height: auto;
@@ -33,7 +33,7 @@ Grid columns:
 --right-width:  auto;
 ```
 
-###Other variables
+### Other variables
 * Border: `--layout-border`
 * Gap between rows: `--row-gap` (also Java API: `setHgap(int hgap)`)
 * Gap between columns: `--column-gap` (also Java API: `setVgap(int vgap)`)
