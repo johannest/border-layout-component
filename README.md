@@ -1,34 +1,45 @@
-# AXA Input Text
+# Border Layout component
 
-Vaadin Java integration of `@axa-ch/input-text`.
+Vaadin version of Java BorderLayout component with rather good API compatibility to Java version.
 
-When creating a starter project from vaadin.com/start, a "npm module name"
-should be specified to create a Java component for it. If "npm module name" is left empty, a Java
-component is created for Lit based `axa-input-text` component.
+Uses CSS Grid which can be configured with the following variables. The default value for the default and the HEADER_MAIN_FOOTER theme variant are presented below.
+
+###Default BorderLayout
+Grid rows:
+```
+--header-height: 1fr;
+--center-height: 1fr;
+--footer-height: 1fr;
+```
+Grid columns:
+```
+--left-width: 1fr;
+--center-width: 1fr;
+--right-width:  1fr;
+```
+
+###BorderLayoutVariant.HEADER_MAIN_FOOTER
+Grid rows:
+```
+--header-height: auto;
+--center-height: 1fr;
+--footer-height: auto;
+```
+
+Grid columns:
+```
+--left-width: 1fr;
+--center-width: auto;
+--right-width:  auto;
+```
+
+###Other variables
+* Border: `--layout-border`
+* Gap between rows: `--row-gap` (also Java API: `setHgap(int hgap)`)
+* Gap between columns: `--column-gap` (also Java API: `setVgap(int vgap)`)
 
 ## Development instructions
-
-JavaScript modules can either be published as an NPM package or be kept as local 
-files in your project. The local JavaScript modules should be put in 
-`src/main/resources/META-INF/frontend` so that they are automatically found and 
-used in the using application.
-
-If the modules are published then the package should be noted in the component 
-using the `@NpmPackage` annotation in addition to using `@JsModule` annotation.
-
 
 Starting the test/demo server:
 1. Run `mvn jetty:run`.
 2. Open http://localhost:8080 in the browser.
-
-## Publishing to Vaadin Directory
-
-You can create the zip package needed for [Vaadin Directory](https://vaadin.com/directory/) using
-```
-mvn versions:set -DnewVersion=1.0.0 # You cannot publish snapshot versions 
-mvn install -Pdirectory
-```
-
-The package is created as `target/axa-input-text-1.0.0.zip`
-
-For more information or to upload the package, visit https://vaadin.com/directory/my-components?uploadNewComponent

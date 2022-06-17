@@ -1,4 +1,4 @@
-package org.vaadin.artur.axainputtext;
+package org.vaadin.addons.johannest.borderlayout;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.junit.Before;

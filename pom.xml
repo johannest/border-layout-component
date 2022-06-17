@@ -3,24 +3,22 @@
     xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>org.vaadin.artur</groupId>
-    <artifactId>axa-input-text-flow</artifactId>
-    <version>1.0-SNAPSHOT</version>
-    <name>AXA Input Text</name>
-    <description>Integration of axa-input-text for Vaadin platform</description>
+    <groupId>org.vaadin.addons.johannest</groupId>
+    <artifactId>border-layout-component</artifactId>
+    <version>1.0.0</version>
+    <name>BorderLayout component</name>
+    <description>Swing like BorderLayout component for Vaadin platform</description>
 
     <properties>
-        <vaadin.version>23.0.0.alpha1</vaadin.version>
-
+        <vaadin.version>23.1.1</vaadin.version>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-
         <jetty.version>9.4.28.v20200408</jetty.version>
     </properties>
     <organization>
-        <name>###author###</name>
+        <name>Johannes Tuikkala</name>
     </organization>
     <licenses>
         <license>
@@ -58,6 +56,11 @@
             <id>Vaadin prereleases</id>
             <url>https://maven.vaadin.com/vaadin-prereleases</url>
         </repository>
+        <!-- Repository needed for the snapshot versions of Vaadin -->
+        <repository>
+            <id>vaadin-snapshots</id>
+            <url>https://oss.sonatype.org/content/repositories/vaadin-snapshots/</url>
+        </repository>
     </repositories>
 
     <pluginRepositories>
@@ -73,6 +76,13 @@
             <id>Vaadin prereleases</id>
             <url>https://maven.vaadin.com/vaadin-prereleases</url>
         </pluginRepository>
+        <pluginRepository>
+            <id>vaadin-snapshots</id>
+            <url>https://oss.sonatype.org/content/repositories/vaadin-snapshots/</url>
+            <releases>
+                <enabled>false</enabled>
+            </releases>
+        </pluginRepository>
     </pluginRepositories>
 
     <dependencies>
@@ -80,6 +90,36 @@
             <groupId>com.vaadin</groupId>
             <!-- Replace artifactId with vaadin-core to use only free components -->
             <artifactId>vaadin</artifactId>
+            <exclusions>
+                <!-- Webjars are only needed when running in Vaadin 13 compatibility
+                    mode in V14. Your add-on can support npm in the same version mode and V13
+                    compatiblity mode at the same time, or with separate versions. Any V13 version
+                    should work with the compatibility mode in V14. -->
+                <exclusion>
+                    <groupId>com.vaadin.webjar</groupId>
+                    <artifactId>*</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.webjars.bowergithub.insites</groupId>
+                    <artifactId>*</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.webjars.bowergithub.polymer</groupId>
+                    <artifactId>*</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.webjars.bowergithub.polymerelements</groupId>
+                    <artifactId>*</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.webjars.bowergithub.vaadin</groupId>
+                    <artifactId>*</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.webjars.bowergithub.webcomponents</groupId>
+                    <artifactId>*</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>org.slf4j</groupId>
@@ -91,12 +131,23 @@
             <artifactId>vaadin-testbench</artifactId>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-core</artifactId>
+            <version>4.0.0</version>
+        </dependency>
 
         <dependency>
             <groupId>io.github.bonigarcia</groupId>
             <artifactId>webdrivermanager</artifactId>
             <version>3.8.1</version>
             <scope>test</scope>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.jsoup</groupId>
+                    <artifactId>jsoup</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
     </dependencies>
 
@@ -124,6 +175,9 @@
                 <groupId>com.vaadin</groupId>
                 <artifactId>vaadin-maven-plugin</artifactId>
                 <version>${vaadin.version}</version>
+                <configuration>
+                    <requireHomeNodeExec>true</requireHomeNodeExec>
+                </configuration>
                 <executions>
                     <execution>
                         <goals>
@@ -138,8 +192,7 @@
                 <version>${jetty.version}</version>
                 <configuration>
                     <scanIntervalSeconds>3</scanIntervalSeconds>
-                    <!-- Use test scope because the UI/demo classes are in
-                            the test package. -->
+                    <!-- Use test scope because the UI/demo classes are in the test package. -->
                     <useTestScope>true</useTestScope>
                     <supportedPackagings>
                         <supportedPackaging>jar</supportedPackaging>
@@ -157,7 +210,7 @@
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-assembly-plugin</artifactId>
-                        <version>3.1.0</version>
+                        <version>3.3.0</version>
                         <configuration>
                             <appendAssemblyId>false</appendAssemblyId>
                             <descriptors>
@@ -201,6 +254,7 @@
                             </execution>
                         </executions>
                         <configuration>
+                            <javadocExecutable>${java.home}/bin/javadoc</javadocExecutable>
                             <quiet>true</quiet>
                             <additionalparam>-Xdoclint:none</additionalparam>
                         </configuration>
@@ -220,7 +274,7 @@
             </build>
         </profile>
 
-        <!-- Run (demo) in production mode-->
+        <!-- Run (demo) in production mode -->
         <profile>
             <id>production</id>
             <properties>
@@ -232,7 +286,7 @@
                     <artifactId>flow-server-production-mode</artifactId>
                 </dependency>
             </dependencies>
-            
+
             <build>
                 <plugins>
                     <plugin>
@@ -305,9 +359,8 @@
                         <version>3.1.0</version>
                         <executions>
                             <execution>
-                                <!-- Since the view class is defined in test, after compilation
-                                copy it to the runtime classpath to ensure it gets visited by
-                                  vaadin-maven-plugin -->
+                                <!-- Since the view class is defined in test, after compilation copy
+                                    it to the runtime classpath to ensure it gets visited by vaadin-maven-plugin -->
                                 <id>copy-test-to-classes</id>
                                 <phase>process-test-classes</phase>
                                 <goals>
@@ -329,5 +382,3 @@
         </profile>
     </profiles>
 </project>
-
-
