@@ -19,7 +19,6 @@ public class SimpleView extends Div {
         }
 
         BorderLayout borderLayout = new BorderLayout(10, 5);
-        borderLayout.addThemeVariants(BorderLayout.BorderLayoutVariant.FRAMED);
         borderLayout.addComponent(components[0], BorderLayout.Constraint.NORTH);
         borderLayout.addComponent(components[1], BorderLayout.Constraint.SOUTH);
         borderLayout.addComponent(components[2], BorderLayout.Constraint.CENTER);

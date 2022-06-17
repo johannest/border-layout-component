@@ -40,6 +40,9 @@ export class BorderLayout extends ThemableMixin(LitElement) {
               row-gap: var(--row-gap);
               column-gap: var(--column-gap);
           }
+          section[theme~="header-main-footer"] {
+              height: 100vh !important;
+          }
           #layout #header {
             overflow: hidden;
             grid-column: 1 / -1;
@@ -75,31 +78,28 @@ export class BorderLayout extends ThemableMixin(LitElement) {
 
     render() {
         return html`
-            <section id="layout" .theme="${this.theme}">
-                <header id="header" .theme="${this.theme}">
+            <section id="layout" theme="${this.theme}">
+                <header id="header">
                     <slot id="NORTH" name="NORTH">
                     </slot>
                 </header>
-                <nav id="lnav" .theme="${this.theme}">
+                <nav id="lnav">
                     <slot id="WEST" name="WEST">
                     </slot>
                 </nav>
-                <main id="main" .theme="${this.theme}">
+                <main id="main">
                     <slot id="CENTER" name="CENTER">
                     </slot>
                 </main>
-                <nav id="rnav" .theme="${this.theme}">
+                <nav id="rnav">
                     <slot id="EAST" name="EAST">
                     </slot>
                 </nav>
-                <footer id="footer" .theme="${this.theme}">
+                <footer id="footer">
                     <slot id="SOUTH" name="SOUTH">
                     </slot>
                 </footer>
             </section>
         `;
-    }
-
-    _setTheme(theme : string) {
     }
 }
